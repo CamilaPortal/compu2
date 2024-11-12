@@ -6,7 +6,7 @@ from .utils import parse_args
 
 async def send_to_scaling_server(image_data, scale_host, scale_port):
     """Envía la imagen al servidor de escalado y recibe la imagen escalada."""
-    # Configura un socket TCP para la comunicación
+
     reader, writer = await asyncio.open_connection(scale_host, scale_port)
     
     # Envía los datos de la imagen al segundo servidor
@@ -48,5 +48,4 @@ async def create_app(scale_host, scale_port):
 if __name__ == '__main__':
     args = parse_args()
     
-    # Ejecuta el servidor, pasando los valores de host y puerto de escalado
     web.run_app(create_app(args.scale_host, args.scale_port), host=args.host, port=args.port)

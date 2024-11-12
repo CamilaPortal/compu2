@@ -11,7 +11,6 @@ async def convert_to_grayscale(image_data):
         output = io.BytesIO()
         grayscale_image.save(output, format="PNG")
         
-        # Retornar los datos binarios de la imagen en escala de grises
         return output.getvalue()
     except Exception as e:
         print(f"Error en convert_to_grayscale: {e}")

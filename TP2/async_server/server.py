@@ -1,4 +1,3 @@
-import argparse
 from aiohttp import web
 from image_processing import convert_to_grayscale
 from utils import parse_args
@@ -19,7 +18,6 @@ async def create_app():
 if __name__ == '__main__':
     args = parse_args()
 
-    # Ejecuta el servidor
     web.run_app(create_app(), host=args.host, port=args.port)
 
 

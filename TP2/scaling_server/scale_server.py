@@ -39,11 +39,9 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
     args = parse_args()
 
-    # El servidor escuchará en la dirección y puerto especificados
     server_process = multiprocessing.Process(target=start_scaling_server, args=(args.host, args.port))
     server_process.start()
 
-    # Registrar el manejador de SIGINT para el proceso principal
     signal.signal(signal.SIGINT, lambda s, f: handle_sigint(s, f, server_process))
 
     try:
