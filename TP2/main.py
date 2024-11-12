@@ -1,10 +1,9 @@
 import multiprocessing
 import argparse
 import signal
-import sys
 import atexit
-from scale_server import start_scaling_server
-from server_a import create_app
+from scaling_server.scale_server import start_scaling_server
+from scaling_server.server_a import create_app
 from aiohttp import web
 
 def start_server_a(host, port, scale_host, scale_port):
@@ -14,19 +13,18 @@ def start_server_a(host, port, scale_host, scale_port):
 
 def start_servers(server_a_host, server_a_port, scale_host, scale_port):
     """Inicia ambos servidores en procesos separados."""
-    # Proceso para el servidor de escalado (scale_server.py)
+    # Proceso para el servidor de escalado
     scaling_server_process = multiprocessing.Process(
         target=start_scaling_server, args=(scale_host, scale_port)
     )
     scaling_server_process.start()
 
-    # Proceso para el servidor principal (server_a.py)
+    # Proceso para el servidor principal
     server_a_process = multiprocessing.Process(
         target=start_server_a, args=(server_a_host, server_a_port, scale_host, scale_port)
     )
     server_a_process.start()
 
-    # Variable de control para evitar múltiples ejecuciones de handle_sigint
     termination_handled = False
 
     # Función para manejar SIGINT y terminar ambos procesos
@@ -40,10 +38,8 @@ def start_servers(server_a_host, server_a_port, scale_host, scale_port):
             server_a_process.join()
             termination_handled = True
 
-    # Configura el manejador para SIGINT
     signal.signal(signal.SIGINT, handle_sigint)
 
-    # Registro de terminación automática en caso de salida inesperada
     atexit.register(handle_sigint, None, None)
 
     # Espera a que ambos procesos terminen

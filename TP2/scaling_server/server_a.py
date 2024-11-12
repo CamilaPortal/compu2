@@ -1,8 +1,8 @@
 import argparse
 import asyncio
 from aiohttp import web
-from image_processing import convert_to_grayscale
-from utils import parse_args
+from .image_processing import convert_to_grayscale
+from .utils import parse_args
 
 async def send_to_scaling_server(image_data, scale_host, scale_port):
     """Envía la imagen al servidor de escalado y recibe la imagen escalada."""

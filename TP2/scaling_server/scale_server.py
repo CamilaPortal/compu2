@@ -1,11 +1,10 @@
 import socket
 import multiprocessing
 import socketserver
-import argparse
 import logging
 import signal
-from image_processing import scale_image
-from utils import parse_args
+from .image_processing import scale_image
+from .utils import parse_args
 
 
 class ImageScalingHandler(socketserver.BaseRequestHandler):
